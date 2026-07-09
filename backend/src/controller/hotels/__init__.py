@@ -1,0 +1,1 @@
+"""Hotels controller package."""

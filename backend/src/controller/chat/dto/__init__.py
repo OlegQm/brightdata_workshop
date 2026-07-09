@@ -1,0 +1,1 @@
+"""Chat controller DTO package."""

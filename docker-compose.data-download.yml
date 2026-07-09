@@ -1,0 +1,29 @@
+services:
+  generate-czsk-boundary:
+    profiles: [download-0, generate-czsk-boundary]
+    image: ghcr.io/osgeo/gdal:ubuntu-small-latest
+    volumes:
+      - ./backend/data:/data
+      - ./installation_scripts:/installation_scripts:ro
+    entrypoint: [/bin/bash, /installation_scripts/sh/generate_czsk_boundary.sh]
+    command: [/data/czsk_boundary.geojson]
+
+  download-sk-cz-tiles:
+    profiles: [download-0, download-sk-cz-tiles]
+    build:
+      context: .
+      dockerfile: installation_scripts/dockerfiles/Dockerfile.czsk-tiles
+    volumes:
+      - ./backend/data:/out
+      - ./installation_scripts/sh/download_czsk_tiles.sh:/download_czsk_tiles.sh:ro
+    entrypoint: [/bin/sh, /download_czsk_tiles.sh]
+
+  download-photon-pbf:
+    profiles: [download-0, download-photon-pbf]
+    build:
+      context: .
+      dockerfile: installation_scripts/dockerfiles/Dockerfile.photon-pbf
+    volumes:
+      - ./backend/data:/data
+      - ./installation_scripts:/installation_scripts:ro
+    entrypoint: [/bin/sh, /installation_scripts/sh/download_photon_pbf.sh]

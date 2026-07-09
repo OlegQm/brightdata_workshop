@@ -1,0 +1,35 @@
+.git
+.gitignore
+.dockerignore
+
+# Local configuration and tool state
+.env
+.env.*
+.codex/
+.playwright-mcp/
+
+# Dependencies and generated frontend output
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Large generated/downloaded geodata; backend image only needs seed data
+backend/data/*
+!backend/data/hotels_seed.json
+
+# Runtime noise
+*.log
+logs/
+*.pid
+.DS_Store
+Thumbs.db

@@ -1,0 +1,1 @@
+"""Chat DTO package."""

@@ -1,0 +1,51 @@
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+.playwright-mcp/
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build output
+dist/
+frontend/dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+ENV/
+
+# Large generated/downloaded geodata
+backend/data/*
+!backend/data/hotels_seed.json
+!backend/data/.gitkeep
+!backend/data/README.md
+
+# Logs and runtime files
+*.log
+logs/
+*.pid
+*.seed
+
+# Docker/local overrides
+docker-compose.override.yml
+*.local.yml
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

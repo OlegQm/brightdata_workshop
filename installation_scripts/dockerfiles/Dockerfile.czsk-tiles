@@ -1,0 +1,5 @@
+FROM alpine:3.21
+ARG PMTILES_VERSION=1.25.0
+RUN apk add --no-cache curl && \
+    curl -fsSL "https://github.com/protomaps/go-pmtiles/releases/download/v${PMTILES_VERSION}/go-pmtiles_${PMTILES_VERSION}_Linux_x86_64.tar.gz" \
+    | tar -xz -C /usr/local/bin pmtiles

@@ -1,0 +1,9 @@
+[mcp_servers.brightdata]
+command = "sh"
+args = [
+  "-lc",
+  "if [ -z \"$BRIGHTDATA_API_TOKEN\" ]; then echo 'BRIGHTDATA_API_TOKEN is required for Bright Data MCP' >&2; exit 1; fi; exec env API_TOKEN=\"$BRIGHTDATA_API_TOKEN\" npx -y @brightdata/mcp"
+]
+
+[mcp_servers.brightdata.env]
+BRIGHTDATA_API_TOKEN="your-token"

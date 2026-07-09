@@ -1,0 +1,28 @@
+.dockerignore
+Dockerfile
+
+# Local configuration
+.env
+.env.*
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Keep only the seed file needed by Dockerfile
+data/*
+!data/hotels_seed.json
+
+# Runtime noise
+*.log
+logs/
+*.pid
+.DS_Store
+Thumbs.db

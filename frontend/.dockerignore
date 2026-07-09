@@ -1,0 +1,25 @@
+.dockerignore
+Dockerfile
+Dockerfile.dev
+
+# Local configuration
+.env
+.env.*
+
+# Dependencies are installed inside the image/container
+node_modules/
+
+# Generated output and caches
+dist/
+.vite/
+.vite-temp/
+coverage/
+
+# Runtime noise
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+.DS_Store
+Thumbs.db

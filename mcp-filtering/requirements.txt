@@ -1,0 +1,4 @@
+fastmcp>=2.0.0
+psycopg[binary]==3.3.2
+pydantic-settings==2.14.2
+loguru==0.7.3

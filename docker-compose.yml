@@ -1,0 +1,74 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: hotels
+      POSTGRES_USER: hotels
+      POSTGRES_PASSWORD: hotels
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hotels -d hotels"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8002:8002"
+    env_file:
+      - .env
+    volumes:
+      - ./backend/data:/app/data
+    environment:
+      DATABASE_URL: postgresql://hotels:hotels@postgres:5432/hotels
+      HOTELS_SEED_PATH: /app/data/hotels_seed.json
+      LLM_URL: http://llm:8003/api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      llm:
+        condition: service_started
+
+  mcp-filtering:
+    build:
+      context: ./mcp-filtering
+    environment:
+      DATABASE_URL: postgresql://hotels:hotels@postgres:5432/hotels
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  llm:
+    build:
+      context: ./llm
+    ports:
+      - "8003:8003"
+    env_file:
+      - .env
+    environment:
+      MCP_FILTERING_URL: http://mcp-filtering:8001/mcp
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+    depends_on:
+      - mcp-filtering
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      HOST: 0.0.0.0
+      PORT: "5173"
+      VITE_BACKEND_URL: http://localhost:8002
+    depends_on:
+      - backend
+
+volumes:
+  postgres-data:
